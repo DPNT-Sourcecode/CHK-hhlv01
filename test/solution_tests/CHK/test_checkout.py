@@ -2,6 +2,8 @@ import pytest
 
 from solutions.CHK.checkout_service import CheckoutService
 
+from solutions.CHK.models import SKUItem, Offer
+
 
 class TestCheckout:
     @pytest.fixture
@@ -20,7 +22,10 @@ class TestCheckout:
         sku_items = checkout_service.create_skus(data)
         assert expected == checkout_service.calculate_cost(sku_items)
 
-    @pytest.mark.parametrize("data,expected", [("A1", -1), ("", -1), ("Z", -1)])
+    @pytest.mark.parametrize(
+        "data,expected",
+        [("A", [SKUItem("A", 50, 1, Offer(3, 130))]), ("CC", [SKUItem("C", 20, 2)])],
+    )
     def test_checkout_create(self, data, expected, checkout_service):
         sku_items = checkout_service.create_skus(data)
         assert expected == sku_items
@@ -29,6 +34,7 @@ class TestCheckout:
     def test_checkout_create_invalid(self, data, expected, checkout_service):
         sku_items = checkout_service.create_skus(data)
         assert expected == sku_items
+
 
 
 
