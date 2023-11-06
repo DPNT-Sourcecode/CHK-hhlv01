@@ -30,8 +30,10 @@ class CheckoutService:
 
         return sku_items
 
-    def _apply_offer(self):
+    def calculate_cost(self, skus: Iterable[SKUItem]):
+        total_cost = 0
+        for sku in skus:
+            total_cost += sku.get_total_cost()
+
         pass
 
-    def calculate_cost(self):
-        pass
