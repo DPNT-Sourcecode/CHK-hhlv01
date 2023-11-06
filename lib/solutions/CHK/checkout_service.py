@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import Iterable, Union
+from typing import Iterable
 
 from solutions.CHK import models
 
@@ -35,9 +35,9 @@ class CheckoutService:
     def _get_sku_offers(self, sku: str):
         return self.offers.get(sku, [])
 
-    def create_skus(self, skus: str) -> Union[Iterable[models.SKUItem], int]:
+    def create_skus(self, skus: str):
         """
-        Return a list of SKUItems or -1 if any item is invalid
+        Return a list of SKUItems and Offers or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
 
@@ -57,14 +57,22 @@ class CheckoutService:
 
         return sku_items, sku_offers
 
-    def calculate_cost(self, skus: Iterable[SKUItem]) -> int:
+    def calculate_cost(
+            self, skus: Iterable[models.SKUItem], offers: Iterable[models.Offer]
+    ) -> int:
         """
         Return the total cost of all SKUs.
         """
         total_cost = 0
 
         for sku in skus:
-            total_cost += sku.get_total_cost()
+            if sku.offer:
+                while quantity >= self.offer.quantity:
+                    cost += self.offer.price
+                    quantity -= self.offer.quantity
+
+            cost += quantity * self.price
 
         return total_cost
+
 

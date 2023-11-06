@@ -23,5 +23,6 @@ class Offer:
 @dataclasses.dataclass
 class SKUItem:
     sku: str
-    price: int
     quantity: int
+    price: int
+

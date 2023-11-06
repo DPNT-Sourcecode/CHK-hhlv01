@@ -27,8 +27,8 @@ class TestCheckoutService:
     @pytest.mark.parametrize(
         "data,expected",
         [
-            ("A", [SKUItem("A", 50, 1, Offer(3, 130))]),
-            ("CC", [SKUItem("C", 20, 2)]),
+            ("A", [SKUItem("A", 1, 50, Offer(3, 130))]),
+            ("CC", [SKUItem("C", 2, 20)]),
             ("", []),
         ],
     )
@@ -46,3 +46,4 @@ class TestCheckout:
     @pytest.mark.parametrize("data,expected", [("", 0)])
     def test_checkout(self, data, expected):
         assert checkout(data) == expected
+
