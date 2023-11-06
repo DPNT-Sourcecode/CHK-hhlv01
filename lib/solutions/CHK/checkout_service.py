@@ -9,10 +9,22 @@ class CheckoutService:
         self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
         self.items = self.prices.keys()
 
-        self.offers = [models.Offer(models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)),
-                       models.Offer(models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)),
-                       models.Offer(models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)),
-                       models.Offer(models.OfferCondition("B", 2), models.OfferResult("B", 2, 45))]
+        self.offers = {
+            "E": models.Offer(
+                models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)
+            ),
+            "A": [
+                models.Offer(
+                    models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)
+                ),
+                models.Offer(
+                    models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)
+                ),
+            ],
+            "B": models.Offer(
+                models.OfferCondition("B", 2), models.OfferResult("B", 2, 45)
+            ),
+        }
 
     def _validate_sku(self, sku: str) -> bool:
         """
@@ -20,29 +32,30 @@ class CheckoutService:
         """
         return sku in self.items
 
-    def _get_sku_offer(self, sku: str):
-        return self.offers.get(sku, None)
+    def _get_sku_offers(self, sku: str):
+        return self.offers.get(sku, [])
 
-    def create_skus(self, skus: str) -> Union[Iterable[SKUItem], int]:
+    def create_skus(self, skus: str) -> Union[Iterable[models.SKUItem], int]:
         """
         Return a list of SKUItems or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
 
         sku_items = []
+        sku_offers = []
         # create SKUItem for each valid SKU, adding offer if found
         for sku, quantity in sku_counts.items():
             if self._validate_sku(sku):
-                if offer := self._get_sku_offer(sku):
-                    sku_item = SKUItem(sku, self.prices.get(sku), quantity, offer)
-                else:
-                    sku_item = SKUItem(sku, self.prices.get(sku), quantity)
+                offers = self._get_sku_offers(sku)
+                sku_offers.append(offers)
+
+                sku_item = models.SKUItem(sku, quantity, self.prices.get(sku))
 
                 sku_items.append(sku_item)
             else:
                 return -1
 
-        return sku_items
+        return sku_items, sku_offers
 
     def calculate_cost(self, skus: Iterable[SKUItem]) -> int:
         """
@@ -54,3 +67,4 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
+
