@@ -30,4 +30,3 @@ class SKUItem:
         cost += quantity * self.price
 
         return cost
-
