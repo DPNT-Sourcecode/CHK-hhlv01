@@ -10,9 +10,9 @@ class CheckoutService:
         self.items = self.prices.keys()
 
         self.offers = {
-            "E": models.Offer(
+            "E": [models.Offer(
                 models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)
-            ),
+            )],
             "A": [
                 models.Offer(
                     models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)
@@ -21,9 +21,9 @@ class CheckoutService:
                     models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)
                 ),
             ],
-            "B": models.Offer(
+            "B":[ models.Offer(
                 models.OfferCondition("B", 2), models.OfferResult("B", 2, 45)
-            ),
+            )],
         }
 
     def _validate_sku(self, sku: str) -> bool:
@@ -46,19 +46,15 @@ class CheckoutService:
         # create SKUItem for each valid SKU, adding offer if found
         for sku, quantity in sku_counts.items():
             if self._validate_sku(sku):
-                offers = self._get_sku_offers(sku)
-                sku_offers.append(offers)
-
                 sku_item = models.SKUItem(sku, quantity, self.prices.get(sku))
-
                 sku_items.append(sku_item)
             else:
                 return -1
 
-        return sku_items, sku_offers
+        return sku_items
 
     def calculate_cost(
-            self, skus: Iterable[models.SKUItem], offers: Iterable[models.Offer]
+        self, skus: Iterable[models.SKUItem]
     ) -> int:
         """
         Return the total cost of all SKUs.
@@ -66,7 +62,10 @@ class CheckoutService:
         total_cost = 0
 
         for sku in skus:
-            if sku.offer:
+            if offers := self.offers.get(sku.sku):
+                for offer in offers:
+
+
                 while quantity >= self.offer.quantity:
                     cost += self.offer.price
                     quantity -= self.offer.quantity
@@ -74,5 +73,6 @@ class CheckoutService:
             cost += quantity * self.price
 
         return total_cost
+
 
 
