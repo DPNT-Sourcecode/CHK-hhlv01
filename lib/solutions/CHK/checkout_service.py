@@ -51,7 +51,3 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
-
-
-
-

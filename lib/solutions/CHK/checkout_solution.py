@@ -15,6 +15,3 @@ def checkout(skus):
             return cost
 
     return -1  # if the input is None
-
-
-
