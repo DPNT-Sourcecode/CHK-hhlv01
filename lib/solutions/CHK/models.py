@@ -25,4 +25,3 @@ class SKUItem:
     sku: str
     price: int
     quantity: int
-    

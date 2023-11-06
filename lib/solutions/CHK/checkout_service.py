@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Iterable, Union
 
-from solutions.CHK.models import SKUItem, Offer
+from solutions.CHK import models
 
 
 class CheckoutService:
@@ -9,7 +9,10 @@ class CheckoutService:
         self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
         self.items = self.prices.keys()
 
-        self.offers = {"A": Offer(3, 130), "B": Offer(2, 45)}
+        self.offers = [models.Offer(models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)),
+                       models.Offer(models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)),
+                       models.Offer(models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)),
+                       models.Offer(models.OfferCondition("B", 2), models.OfferResult("B", 2, 45))]
 
     def _validate_sku(self, sku: str) -> bool:
         """
