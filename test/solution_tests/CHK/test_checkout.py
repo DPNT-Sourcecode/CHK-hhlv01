@@ -1,10 +1,12 @@
 import pytest
 
+from solutions.CHK.checkout_service import CheckoutService
+
 
 class TestCheckout:
     @pytest.fixture
-    def valid_sku_values(self):
-        return "ABCDE"
+    def checkout_service(self):
+        return CheckoutService()
 
     @pytest.fixture
     def invalid_sku_values(self):
@@ -21,3 +23,4 @@ class TestCheckout:
 
     def test_checkout_invalid(self, invalid_sku_values):
         pass
+
