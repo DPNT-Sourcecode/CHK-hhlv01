@@ -10,9 +10,11 @@ class CheckoutService:
         self.items = self.prices.keys()
 
         self.offers = {
-            "E": [models.Offer(
-                models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)
-            )],
+            "E": [
+                models.Offer(
+                    models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)
+                )
+            ],
             "A": [
                 models.Offer(
                     models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)
@@ -21,9 +23,11 @@ class CheckoutService:
                     models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)
                 ),
             ],
-            "B":[ models.Offer(
-                models.OfferCondition("B", 2), models.OfferResult("B", 2, 45)
-            )],
+            "B": [
+                models.Offer(
+                    models.OfferCondition("B", 2), models.OfferResult("B", 2, 45)
+                )
+            ],
         }
 
     def _validate_sku(self, sku: str) -> bool:
@@ -53,9 +57,7 @@ class CheckoutService:
 
         return sku_items
 
-    def calculate_cost(
-        self, skus: Iterable[models.SKUItem]
-    ) -> int:
+    def calculate_cost(self, skus: Iterable[models.SKUItem]) -> int:
         """
         Return the total cost of all SKUs.
         """
@@ -64,15 +66,11 @@ class CheckoutService:
         for sku in skus:
             if offers := self.offers.get(sku.sku):
                 for offer in offers:
-
-
-                while quantity >= self.offer.quantity:
-                    cost += self.offer.price
-                    quantity -= self.offer.quantity
-
-            cost += quantity * self.price
+                    if sku.on_offer(offer):
+                        total_cost += 1
 
         return total_cost
+
 
 
 
