@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Iterable, Union
 
-from lib.solutions.CHK.models import SKUItem, Offer
+from solutions.CHK.models import SKUItem, Offer
 
 
 class CheckoutService:
@@ -51,6 +51,7 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
+
 
 
 
