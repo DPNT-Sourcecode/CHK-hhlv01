@@ -12,15 +12,15 @@ class TestCheckout:
     def invalid_sku_values(self):
         return "ABCD214"
 
-    def test_checkout_single(self, valid_sku_values):
+    @pytest.mark.parametrize("test_data,expected", [("A", 50), ("ABCD", 115), ("CCCC": 80)])
+    def test_checkout_individual(self, test_data, expected, checkout_service):
+        checkout_service.calculate_cost
         pass
 
     def test_checkout_offer(self, valid_sku_values):
         pass
 
-    def test_checkout_multi(self, valid_sku_values):
-        pass
-
     def test_checkout_invalid(self, invalid_sku_values):
         pass
+
 
