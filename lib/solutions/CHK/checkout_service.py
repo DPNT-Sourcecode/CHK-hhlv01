@@ -7,30 +7,29 @@ from lib.solutions.CHK.models import SKUItem
 class CheckoutService:
     def __init__(self):
         self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
+        self.items = self.prices.keys()
 
     def _validate_sku(self, sku: str) -> bool:
         """
         Return True if the sku is valid, False otherwise
         """
-        return False # TODO:
+        return sku in self.items
 
     def create_sku_items(self, skus: str) -> Union[Iterable[SKUItem], int]:
         """
-        Return a list of SKUItems or -1 if any items are invalid
+        Return a list of SKUItems or -1 if no items, or any item is invalid
         """
-        skus_list = list(skus)
-        sku_counts = Counter(skus_list)
-
+        sku_counts = Counter(skus)
 
         sku_items = []
-        for sku in skus:
+        for sku, quantity in sku_counts.items():
             if self._validate_sku(sku):
-                sku_items.append(SKUItem(sku, self.prices.get(sku))
+                sku_items.append(SKUItem(sku, self.prices.get(sku), quantity))
             else:
                 return -1
 
+        return sku_items
 
-        return
 
 
 
