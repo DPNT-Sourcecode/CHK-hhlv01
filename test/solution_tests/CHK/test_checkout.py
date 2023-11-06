@@ -1,4 +1,16 @@
+import pytest
+
+
 class TestCheckout:
+
+    @pytest.fixture
+    def valid_sku_values(self):
+        return "ABCDE"
+
+    @pytest.fixture
+    def invalid_sku_values(self):
+        return "ABCD214"
+
     def test_checkout_single(self):
         pass
 
@@ -10,3 +22,4 @@ class TestCheckout:
 
     def test_checkout_invalid(self):
         pass
+
