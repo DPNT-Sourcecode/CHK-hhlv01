@@ -4,11 +4,12 @@ from solutions.CHK.checkout_solution import checkout
 from solutions.CHK.models import SKUItem, Offer
 
 
-class TestCheckoutService:
-    @pytest.fixture
-    def checkout_service(self):
-        return CheckoutService()
+@pytest.fixture
+def checkout_service():
+    return CheckoutService()
 
+
+class TestCheckoutService:
     @pytest.mark.parametrize(
         "data,expected", [("A", 50), ("ABCD", 115), ("CCCC", 80), ("", 0)]
     )
@@ -42,9 +43,10 @@ class TestCheckoutService:
 
 
 class TestCheckout:
+    @pytest.mark.parametrize("data,expected", [("", 0)])
+    def test_checkout(self, data, expected):
+        assert checkout(data) == expected
 
-    def test_checkout(self):
-        checkout
 
 
 
