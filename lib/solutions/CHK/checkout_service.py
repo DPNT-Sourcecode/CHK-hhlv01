@@ -20,7 +20,7 @@ class CheckoutService:
     def _get_sku_offer(self, sku: str):
         return self.offers.get(sku, None)
 
-    def create_sku_items(self, skus: str) -> Union[Iterable[SKUItem], int]:
+    def create_skus(self, skus: str) -> Union[Iterable[SKUItem], int]:
         """
         Return a list of SKUItems or -1 if no items, or any item is invalid
         """
@@ -51,3 +51,4 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
+

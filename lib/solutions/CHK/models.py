@@ -22,10 +22,12 @@ class SKUItem:
         cost = 0
         quantity = self.quantity
 
-        while quantity >= self.offer.quantity:
-            cost += self.offer.price
-            quantity -= self.offer.quantity
+        if self.offer:
+            while quantity >= self.offer.quantity:
+                cost += self.offer.price
+                quantity -= self.offer.quantity
 
         cost += quantity * self.price
 
         return cost
+
