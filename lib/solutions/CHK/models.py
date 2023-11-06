@@ -16,6 +16,9 @@ class SKUItem:
     offer: Optional[Offer] = None
 
     def get_total_cost(self):
+        """
+        Return the total cost of the SKUItem, including any valid offers
+        """
         cost = 0
         quantity = self.quantity
 
@@ -26,5 +29,6 @@ class SKUItem:
         cost += quantity * self.price
 
         return cost
+
 
 

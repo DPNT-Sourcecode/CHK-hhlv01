@@ -1,12 +1,13 @@
 from collections import Counter
 from typing import Iterable, Union
 
-from lib.solutions.CHK.models import SKUItem
+from lib.solutions.CHK.models import SKUItem, Offer
 
 
 class CheckoutService:
     def __init__(self):
         self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
+        self.offers = {"A": Offer(3, 130), "B": Offer(2, 45)}
         self.items = self.prices.keys()
 
     def _validate_sku(self, sku: str) -> bool:
@@ -30,10 +31,15 @@ class CheckoutService:
 
         return sku_items
 
-    def calculate_cost(self, skus: Iterable[SKUItem]):
+    def calculate_cost(self, skus: Iterable[SKUItem]) -> int:
+        """
+        Return the total cost of all SKUs.
+        """
         total_cost = 0
+
         for sku in skus:
             total_cost += sku.get_total_cost()
 
-        pass
+        return total_cost
+
 

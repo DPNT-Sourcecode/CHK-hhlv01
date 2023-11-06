@@ -11,11 +11,9 @@ def checkout(skus):
         sku_items = checkout_service.create_sku_items(skus)
 
         if sku_items != -1:
-
-
-            # apply offers
-
-            # sum price
+            cost = checkout_service.calculate_cost()
+            return cost
 
     return -1  # if the input is None
+
 
