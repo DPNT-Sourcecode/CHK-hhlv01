@@ -1,11 +1,10 @@
 import pytest
-
 from solutions.CHK.checkout_service import CheckoutService
-
+from solutions.CHK.checkout_solution import checkout
 from solutions.CHK.models import SKUItem, Offer
 
 
-class TestCheckout:
+class TestCheckoutService:
     @pytest.fixture
     def checkout_service(self):
         return CheckoutService()
@@ -40,6 +39,13 @@ class TestCheckout:
     def test_checkout_create_invalid(self, data, expected, checkout_service):
         sku_items = checkout_service.create_skus(data)
         assert expected == sku_items
+
+
+class TestCheckout:
+
+    def test_checkout(self):
+        checkout
+
 
 
 

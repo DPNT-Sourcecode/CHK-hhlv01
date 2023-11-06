@@ -22,7 +22,7 @@ class CheckoutService:
 
     def create_skus(self, skus: str) -> Union[Iterable[SKUItem], int]:
         """
-        Return a list of SKUItems or -1 if no items, or any item is invalid
+        Return a list of SKUItems or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
 
@@ -51,5 +51,6 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
+
 
 
