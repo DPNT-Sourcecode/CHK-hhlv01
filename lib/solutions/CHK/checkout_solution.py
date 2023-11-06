@@ -4,16 +4,16 @@ from lib.solutions.CHK.checkout_service import CheckoutService
 
 
 def checkout(skus):
-    # skus to list - list entries only chars A-Z
-    sku_items = CheckoutService.create_sku_items(skus)
+    if skus:
+        # skus to list - list entries only chars A-Z
+        checkout_service = CheckoutService()
 
-    # counter for skus
+        sku_items = checkout_service.create_sku_items(skus)
 
-    # apply offers
+        if sku_items:
 
-    # sum price
+            # apply offers
 
-    raise NotImplementedError()
+            # sum price
 
-
-
+    return -1  # if the input is None

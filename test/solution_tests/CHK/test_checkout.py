@@ -21,5 +21,3 @@ class TestCheckout:
 
     def test_checkout_invalid(self, invalid_sku_values):
         pass
-
-

@@ -30,6 +30,8 @@ class CheckoutService:
 
         return sku_items
 
+    def _apply_offer(self):
+        pass
 
-
-
+    def calculate_cost(self):
+        pass
