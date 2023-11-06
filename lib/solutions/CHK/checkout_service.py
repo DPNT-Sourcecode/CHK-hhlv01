@@ -39,7 +39,7 @@ class CheckoutService:
             else:
                 return -1
 
-        return sku_items if sku_items else -1
+        return sku_items
 
     def calculate_cost(self, skus: Iterable[SKUItem]) -> int:
         """
@@ -51,4 +51,5 @@ class CheckoutService:
             total_cost += sku.get_total_cost()
 
         return total_cost
+
 
