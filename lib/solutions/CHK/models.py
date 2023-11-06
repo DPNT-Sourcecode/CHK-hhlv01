@@ -1,11 +1,23 @@
 import dataclasses
-from typing import Optional
+
+
+@dataclasses.dataclass
+class OfferCondition:
+    sku: str
+    quantity: int
+
+
+@dataclasses.dataclass
+class OfferResult:
+    sku: str
+    quantity: int
+    price: int
 
 
 @dataclasses.dataclass
 class Offer:
-    quantity: int
-    price: int
+    condition: OfferCondition
+    result: OfferResult
 
 
 @dataclasses.dataclass
@@ -13,20 +25,4 @@ class SKUItem:
     sku: str
     price: int
     quantity: int
-    offer: Optional[Offer] = None
-
-    def get_total_cost(self):
-        """
-        Return the total cost of the SKUItem, including any valid offers
-        """
-        cost = 0
-        quantity = self.quantity
-
-        if self.offer:
-            while quantity >= self.offer.quantity:
-                cost += self.offer.price
-                quantity -= self.offer.quantity
-
-        cost += quantity * self.price
-
-        return cost
+    
