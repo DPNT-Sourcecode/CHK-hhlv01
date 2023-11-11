@@ -1,12 +1,12 @@
 from collections import Counter
 from typing import Dict
 
-from lib.solutions.CHK import models
+from solutions.CHK import models
 
 
 class CheckoutService:
     def __init__(self):
-        self.prices = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 2}
+        self.prices = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40}
         self.items = self.prices.keys()
 
         self.offers = [
@@ -73,6 +73,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
