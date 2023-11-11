@@ -11,9 +11,9 @@ class CheckoutService:
 
         self.offers = [
             models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
-                models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
-                models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
-                models.Offer(models.Condition("B", 2), models.Result("B", 2, 45))
+            models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
+            models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
+            models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
         ]
 
     def _validate_sku(self, sku: str) -> bool:
@@ -21,9 +21,6 @@ class CheckoutService:
         Return True if the sku is valid, False otherwise
         """
         return sku in self.items
-
-    def _get_sku_offers(self, sku: str):
-        return self.offers.get(sku, [])
 
     def create_skus(self, skus: str):
         """
@@ -46,19 +43,12 @@ class CheckoutService:
         """
         Return the total cost of all SKUs.
         """
-        total_cost = 0
-
 
         for offer in self.offers:
+            skus = offer.apply(skus)
 
-
-
-        for sku in skus:
-            if offers := self.offers.get(sku.sku):
-                for offer in offers:
-                    if sku.on_offer(offer):
-                        total_cost += 1
-
+        total_cost = sum(sku.price for sku in skus)
         return total_cost
+
 
 

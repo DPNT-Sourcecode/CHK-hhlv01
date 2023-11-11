@@ -1,5 +1,12 @@
 import dataclasses
-from typing import Optional
+from typing import Optional, Iterable
+
+
+@dataclasses.dataclass
+class SKUItem:
+    sku: str
+    price: int
+    offer_applied: Optional[bool] = False
 
 
 @dataclasses.dataclass
@@ -23,11 +30,5 @@ class Offer:
     def apply(self, skus: Iterable[SKUItem]):
         return skus
 
-
-@dataclasses.dataclass
-class SKUItem:
-    sku: str
-    price: int
-    offer_applied: Optional[bool] = False
 
 
