@@ -39,7 +39,7 @@ class CheckoutService:
             self,
             offer: models.Offer,
             skus: Dict[str, int],
-            carry_over: Dict[str, int] = {},
+            carry_over: Dict[str, int] = dict(),
             cost: int = 0,
     ):
         if offer.condition.applies(skus) and offer.result.applies(skus):
@@ -86,6 +86,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
