@@ -27,8 +27,15 @@ class Result:
     quantity: int
     price: int
 
+    def applies(self, skus: Dict[str, int]):
+        """
+        Return True if the Condition applies to the SKUItem's provided
+        """
+        return self.quantity <= skus.get(self.sku, 0)
+
 
 @dataclasses.dataclass
 class Offer:
     condition: Condition
     result: Result
+
