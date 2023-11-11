@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Dict
 
-from lib.solutions.CHK import models
+from solutions.CHK import models
 
 
 class CheckoutService:
@@ -45,15 +45,16 @@ class CheckoutService:
         if offer.condition.applies(skus) and offer.result.applies(skus):
             skus[offer.condition.sku] -= offer.condition.quantity
 
+            # if the condition is unrelated to the result and should be retained for later offers
             if offer.result.sku != offer.condition.sku:
-                carry_over[offer.condition.sku] += offer.condition.quantity
+                if carry_over.get(offer.condition.sku, None):
+                    carry_over[offer.condition.sku] += offer.condition.quantity
+                else:
+                    carry_over[offer.condition.sku] = offer.condition.quantity
 
             # if the result price is 0, subtract from quantity
             if offer.result.price == 0:
-                if skus.get(offer.result.sku, None):
-                    skus[offer.result.sku] -= offer.result.quantity
-                else:
-                    skus[offer.result.sku] = offer.result.quantity
+                skus[offer.result.sku] -= offer.result.quantity
 
             cost += offer.result.price
 
@@ -90,5 +91,6 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
