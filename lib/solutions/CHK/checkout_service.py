@@ -37,11 +37,11 @@ class CheckoutService:
         self.items = self.prices.keys()
 
         self.offers = [
-            models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
-            models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
             models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
+            models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
             models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
             models.Offer(models.Condition("F", 3), models.Result("F", 3, 20)),
+            models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
             models.Offer(models.Condition("H", 10), models.Result("H", 10, 80)),
             models.Offer(models.Condition("H", 5), models.Result("H", 5, 45)),
             models.Offer(models.Condition("K", 2), models.Result("K", 2, 120)),
@@ -52,6 +52,7 @@ class CheckoutService:
             models.Offer(models.Condition("U", 4), models.Result("U", 4, 120)),
             models.Offer(models.Condition("V", 3), models.Result("V", 3, 130)),
             models.Offer(models.Condition("V", 2), models.Result("V", 2, 90)),
+            models.Offer(models.Condition("STXYZ", 2), models.Result("V", 2, 45)),
         ]
 
     def _validate_sku(self, sku: str) -> bool:
@@ -129,5 +130,6 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 

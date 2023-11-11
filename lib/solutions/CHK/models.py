@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional, Dict
+from typing import Optional, Dict, Iterable
 
 
 @dataclasses.dataclass
@@ -36,5 +36,6 @@ class Result:
 
 @dataclasses.dataclass
 class Offer:
-    condition: Condition
-    result: Result
+    condition: Iterable[Condition]
+    result: Iterable[Result]
+
