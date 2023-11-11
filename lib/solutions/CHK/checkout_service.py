@@ -52,7 +52,10 @@ class CheckoutService:
             models.Offer(models.Condition("U", 4), models.Result("U", 4, 120)),
             models.Offer(models.Condition("V", 3), models.Result("V", 3, 130)),
             models.Offer(models.Condition("V", 2), models.Result("V", 2, 90)),
-            models.Offer(models.MultiCondition("STXYZ", 2), models.Result("V", 2, 45)),
+            models.Offer(
+                models.MultiCondition(["S", "T", "X", "Y", "Z"], 3),
+                models.Result("", 3, 45),
+            ),
         ]
 
     def _validate_sku(self, sku: str) -> bool:
@@ -130,6 +133,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 

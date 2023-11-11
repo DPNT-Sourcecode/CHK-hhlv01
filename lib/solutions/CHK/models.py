@@ -28,13 +28,15 @@ class Condition(AbstractCond):
 
 @dataclasses.dataclass
 class MultiCondition(AbstractCond):
-    sku: Iterable[str]
+    skus: Iterable[str]
     quantity: int
 
     def applies(self, skus: Dict[str, int]):
         """
         Return True if the Condition applies to the SKUItem's provided
         """
+
+        if skus
 
         return self.quantity <= skus.get(self.sku, 0)
 
@@ -56,5 +58,6 @@ class Result:
 class Offer:
     condition: Condition
     result: Result
+
 
 
