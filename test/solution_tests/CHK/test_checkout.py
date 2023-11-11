@@ -43,7 +43,7 @@ class TestCheckoutService:
         sku_items = checkout_service.create_skus(data)
         assert expected == sku_items
 
-    @pytest.mark.parametrize("data,expected", [("A1", -1), ("Z", -1)])
+    @pytest.mark.parametrize("data,expected", [("A1", -1)])
     def test_checkout_create_invalid(self, data, expected, checkout_service):
         sku_items = checkout_service.create_skus(data)
         assert expected == sku_items
@@ -53,5 +53,6 @@ class TestCheckout:
     @pytest.mark.parametrize("data,expected", [("", 0)])
     def test_checkout(self, data, expected):
         assert checkout(data) == expected
+
 
 

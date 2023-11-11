@@ -6,8 +6,34 @@ from solutions.CHK import models
 
 class CheckoutService:
     def __init__(self):
-        self.prices = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10, "G": 20, "H": 10, "I": 35, "J": 60,
-                       "K": 80, "L": 90, "M": 15, "N": 40, "O": 10, }
+        self.prices = {
+            "A": 50,
+            "B": 30,
+            "C": 20,
+            "D": 15,
+            "E": 40,
+            "F": 10,
+            "G": 20,
+            "H": 10,
+            "I": 35,
+            "J": 60,
+            "K": 80,
+            "L": 90,
+            "M": 15,
+            "N": 40,
+            "O": 10,
+            "P": 50,
+            "Q": 30,
+            "R": 50,
+            "S": 30,
+            "T": 20,
+            "U": 40,
+            "V": 50,
+            "W": 20,
+            "X": 90,
+            "Y": 10,
+            "Z": 50,
+        }
         self.items = self.prices.keys()
 
         self.offers = [
@@ -16,6 +42,16 @@ class CheckoutService:
             models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
             models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
             models.Offer(models.Condition("F", 3), models.Result("F", 3, 20)),
+            models.Offer(models.Condition("H", 10), models.Result("H", 10, 80)),
+            models.Offer(models.Condition("H", 5), models.Result("H", 5, 45)),
+            models.Offer(models.Condition("K", 2), models.Result("K", 2, 150)),
+            models.Offer(models.Condition("N", 3), models.Result("M", 1, 0)),
+            models.Offer(models.Condition("P", 5), models.Result("P", 5, 200)),
+            models.Offer(models.Condition("R", 3), models.Result("Q", 1, 0)),
+            models.Offer(models.Condition("Q", 3), models.Result("Q", 3, 80)),
+            models.Offer(models.Condition("U", 4), models.Result("U", 4, 120)),
+            models.Offer(models.Condition("V", 3), models.Result("V", 3, 130)),
+            models.Offer(models.Condition("V", 2), models.Result("V", 2, 90)),
         ]
 
     def _validate_sku(self, sku: str) -> bool:
@@ -93,6 +129,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
