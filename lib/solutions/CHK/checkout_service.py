@@ -46,11 +46,14 @@ class CheckoutService:
             skus[offer.condition.sku] -= offer.condition.quantity
 
             if offer.result.sku != offer.condition.sku:
-                carry_over[offer.condition.sku] = offer.condition.quantity
+                carry_over[offer.condition.sku] += offer.condition.quantity
 
             # if the result price is 0, subtract from quantity
             if offer.result.price == 0:
-                skus[offer.result.sku] -= offer.result.quantity
+                if skus.get(offer.result.sku, None):
+                    skus[offer.result.sku] -= offer.result.quantity
+                else:
+                    skus[offer.result.sku] = offer.result.quantity
 
             cost += offer.result.price
 
@@ -87,4 +90,5 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
