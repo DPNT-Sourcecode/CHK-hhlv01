@@ -35,18 +35,24 @@ class CheckoutService:
 
         return sku_counts
 
-    def apply_offer(self, offer: models.Offer, skus: Dict[str, int]):
-
+    def apply_offer(self, offer: models.Offer, skus: Dict[str, int], cost: int):
         if offer.condition.applies(skus):
-            skus[self.condition.sku] = [sku.set_offer_applied() for sku in valid_skus]
+            skus[offer.condition.sku] -= offer.condition.quantity
 
-            # apply result
-            skus = self.result.apply(skus)
+            # if the result price is 0, subtract from quantity
+            if offer.result.price == 0:
+                skus[offer.result.sku] -= offer.result.quantity
+
+            cost += offer.result.price
+
+            # prevent further offers using items with none available for offer
+            if skus[offer.result.sku] <= 0:
+                del skus[offer.result.sku]
 
             # call apply again until offer cond unsatisfied
-            skus = self.apply(skus)
+            cost, skus = self.apply_offer(offer, skus, cost)
 
-        return skus
+        return cost, skus
 
     def calculate_cost(self, skus: Dict[str, int]) -> int:
         """
@@ -55,10 +61,11 @@ class CheckoutService:
 
         total_cost = 0
         for offer in self.offers:
-            skus, cost = offer.apply(skus)
+            skus, cost = self.apply_offer(offer, skus, total_cost)
             total_cost += cost
 
         return total_cost
+
 
 
 
