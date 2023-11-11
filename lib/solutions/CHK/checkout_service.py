@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Dict, Iterable
 
-from solutions.CHK import models
+from lib.solutions.CHK import models
 
 
 class CheckoutService:
@@ -49,5 +49,6 @@ class CheckoutService:
         for offer in self.offers:
             skus = offer.apply(skus)
 
-        total_cost = sum(sku.price for sku in skus)
+        total_cost = sum(sku.price for sku in skus.values())
         return total_cost
+
