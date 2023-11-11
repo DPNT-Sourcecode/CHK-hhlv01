@@ -129,7 +129,3 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
-
-
-
-
