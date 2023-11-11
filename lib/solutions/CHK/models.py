@@ -39,11 +39,15 @@ class Result:
 
         count = 0
         for sku in res_skus:
-            if count > self.quantity:
+            if count == self.quantity:
                 break
 
+            if count == 0:
+                sku.price = self.price
+            else:
+                sku.price = 0
+
             sku.set_offer_applied()
-            sku.price = self.price / self.quantity
             count += 1
 
         skus[self.sku] = res_skus
@@ -70,5 +74,6 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
+
 
 
