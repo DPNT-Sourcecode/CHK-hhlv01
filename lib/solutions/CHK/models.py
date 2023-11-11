@@ -8,6 +8,9 @@ class SKUItem:
     price: int
     offer_applied: Optional[bool] = False
 
+    def set_offer_applied(self):
+        self.offer_applied = True
+        return self
 
 @dataclasses.dataclass
 class Condition:
@@ -32,9 +35,9 @@ class Offer:
 
         valid_skus = skus.get(self.condition.sku, [])
         if len(valid_skus) >= self.condition.quantity and all(not sku.offer_applied for sku in valid_skus):
-                
 
-            skus[self.condition.sku] = valid_skus
+
+            skus[self.condition.sku] = [sku.set_offer_applied() for sku in valid_skus]
 
             # apply result
             self.result.
@@ -45,6 +48,7 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
+
 
 
 
