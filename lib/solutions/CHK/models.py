@@ -30,19 +30,22 @@ class Offer:
     def apply(self, skus: Dict[str, Iterable[SKUItem]]):
         # if condition is valid and item not offer_applied
 
-        valid_skus = skus.get(self.condition.sku)
-        if all(not sku.offer_applied for sku in valid_skus) >= self.condition.quantity:
+        valid_skus = skus.get(self.condition.sku, [])
+        if len(valid_skus) >= self.condition.quantity and all(not sku.offer_applied for sku in valid_skus):
+                
 
-
+            skus[self.condition.sku] = valid_skus
 
             # apply result
             self.result.
+            skus[self.result.sku] = update_sku
 
 
             # call apply again until offer cond unsatisified
             skus = self.apply(skus)
 
         return skus
+
 
 
 
