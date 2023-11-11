@@ -39,7 +39,7 @@ class Result:
 
         for sku in res_skus:
             sku.set_offer_applied()
-            sku.price -= self.price
+            sku.price = self.price
 
         skus[self.sku] = res_skus
 
@@ -65,5 +65,6 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
+
 
 

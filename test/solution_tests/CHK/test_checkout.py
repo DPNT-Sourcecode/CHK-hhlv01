@@ -1,8 +1,8 @@
 import pytest
 
-from lib.solutions.CHK.checkout_service import CheckoutService
-from lib.solutions.CHK.checkout_solution import checkout
-from lib.solutions.CHK.models import SKUItem
+from solutions.CHK.checkout_service import CheckoutService
+from solutions.CHK.checkout_solution import checkout
+from solutions.CHK.models import SKUItem
 
 
 @pytest.fixture
@@ -43,5 +43,6 @@ class TestCheckout:
     @pytest.mark.parametrize("data,expected", [("", 0)])
     def test_checkout(self, data, expected):
         assert checkout(data) == expected
+
 
 
