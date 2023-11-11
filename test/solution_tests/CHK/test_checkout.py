@@ -25,7 +25,7 @@ class TestCheckoutService:
             ("BB", 45),
             ("BBBBAAA", 220),
             ("PPPPP", 200),
-            ("KK", 150),
+            ("KK", 120),
             ("HHHHH", 45),
             ("HHHHHHHHHH", 80),
             ("QQQ", 80),
@@ -70,3 +70,4 @@ class TestCheckout:
     @pytest.mark.parametrize("data,expected", [("", 0)])
     def test_checkout(self, data, expected):
         assert checkout(data) == expected
+

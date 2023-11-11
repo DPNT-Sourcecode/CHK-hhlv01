@@ -44,7 +44,7 @@ class CheckoutService:
             models.Offer(models.Condition("F", 3), models.Result("F", 3, 20)),
             models.Offer(models.Condition("H", 10), models.Result("H", 10, 80)),
             models.Offer(models.Condition("H", 5), models.Result("H", 5, 45)),
-            models.Offer(models.Condition("K", 2), models.Result("K", 2, 150)),
+            models.Offer(models.Condition("K", 2), models.Result("K", 2, 120)),
             models.Offer(models.Condition("N", 3), models.Result("M", 1, 0)),
             models.Offer(models.Condition("P", 5), models.Result("P", 5, 200)),
             models.Offer(models.Condition("R", 3), models.Result("Q", 1, 0)),
@@ -129,4 +129,5 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
