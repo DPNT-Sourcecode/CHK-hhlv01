@@ -32,8 +32,3 @@ class Result:
 class Offer:
     condition: Condition
     result: Result
-
-
-
-
-

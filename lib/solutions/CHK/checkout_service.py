@@ -61,7 +61,7 @@ class CheckoutService:
 
         total_cost = 0
         for offer in self.offers:
-            skus, cost = self.apply_offer(offer, skus, total_cost)
+            cost, skus = self.apply_offer(offer, skus, total_cost)
             total_cost += cost
 
             if not skus:  # if there are no items to apply offers to
@@ -72,8 +72,3 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
-
-
-
-
-
