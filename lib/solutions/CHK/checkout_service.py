@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import Dict, Iterable
+from typing import Dict
 
 from solutions.CHK import models
 
@@ -27,31 +27,38 @@ class CheckoutService:
         Return a list of SKUItems and Offers or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
-        sku_items = {}
 
         # create SKUItem for each valid SKU, adding offer if found
-        for sku, quantity in sku_counts.items():
-            if self._validate_sku(sku):
-                sku_items[sku] = [
-                    models.SKUItem(sku, self.prices.get(sku))
-                    for i in range(0, quantity)
-                ]
-            else:
+        for sku in sku_counts.keys():
+            if not self._validate_sku(sku):
                 return -1
 
-        return sku_items
+        return sku_counts
 
-    def calculate_cost(self, skus: Dict[str, Iterable[models.SKUItem]]) -> int:
+    def apply_offer(self, offer: models.Offer, skus: Dict[str, int]):
+
+        if offer.condition.applies(skus):
+            skus[self.condition.sku] = [sku.set_offer_applied() for sku in valid_skus]
+
+            # apply result
+            skus = self.result.apply(skus)
+
+            # call apply again until offer cond unsatisfied
+            skus = self.apply(skus)
+
+        return skus
+
+    def calculate_cost(self, skus: Dict[str, int]) -> int:
         """
         Return the total cost of all SKUs.
         """
 
+        total_cost = 0
         for offer in self.offers:
-            skus = offer.apply(skus)
+            skus, cost = offer.apply(skus)
+            total_cost += cost
 
-        sku_values = []
-        [sku_values.extend(s) for s in skus.values()]
-        total_cost = sum(sku.price for sku in sku_values)
         return total_cost
+
 
 

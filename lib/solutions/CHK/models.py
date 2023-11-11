@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional, Iterable, Dict
+from typing import Optional, Dict
 
 
 @dataclasses.dataclass
@@ -18,11 +18,11 @@ class Condition:
     sku: str
     quantity: int
 
-    def applies(self, skus: Iterable[SKUItem]):
+    def applies(self, skus: Dict[str, int]):
         """
         Return True if the Condition applies to the SKUItem's provided
         """
-        return len(skus) >= self.quantity and all(not sku.offer_applied for sku in skus)
+        return self.quantity <= skus.get(self.sku, 0)
 
 
 @dataclasses.dataclass
@@ -31,9 +31,9 @@ class Result:
     quantity: int
     price: int
 
-    def apply(self, skus: Dict[str, Iterable[SKUItem]]):
+    def apply(self, skus: Dict[str, int]):
         """
-        Return the SKUs after updating prices
+        Return the SKUs and cost
         """
         res_skus = skus.get(self.sku, [])
 
@@ -60,20 +60,6 @@ class Offer:
     condition: Condition
     result: Result
 
-    def apply(self, skus: Dict[str, Iterable[SKUItem]]):
-        # if condition is valid and item not offer_applied
-
-        valid_skus = skus.get(self.condition.sku, [])
-        if self.condition.applies(valid_skus):
-            skus[self.condition.sku] = [sku.set_offer_applied() for sku in valid_skus]
-
-            # apply result
-            skus = self.result.apply(skus)
-
-            # call apply again until offer cond unsatisfied
-            skus = self.apply(skus)
-
-        return skus
 
 
 
