@@ -6,7 +6,7 @@ from lib.solutions.CHK import models
 
 class CheckoutService:
     def __init__(self):
-        self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
+        self.prices = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 2}
         self.items = self.prices.keys()
 
         self.offers = [
@@ -35,7 +35,7 @@ class CheckoutService:
 
         return sku_counts
 
-    def apply_offer(self, offer: models.Offer, skus: Dict[str, int], cost: int):
+    def apply_offer(self, offer: models.Offer, skus: Dict[str, int], cost: int = 0):
         if offer.condition.applies(skus):
             skus[offer.condition.sku] -= offer.condition.quantity
 
@@ -61,7 +61,7 @@ class CheckoutService:
 
         total_cost = 0
         for offer in self.offers:
-            cost, skus = self.apply_offer(offer, skus, total_cost)
+            cost, skus = self.apply_offer(offer, skus)
             total_cost += cost
 
             if not skus:  # if there are no items to apply offers to
@@ -72,4 +72,5 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
