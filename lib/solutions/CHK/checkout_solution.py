@@ -1,6 +1,6 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
-from solutions.CHK.checkout_service import CheckoutService
+from lib.solutions.CHK.checkout_service import CheckoutService
 
 
 def checkout(skus):
@@ -14,4 +14,5 @@ def checkout(skus):
         return cost
 
     return -1  # if the input is None
+
 

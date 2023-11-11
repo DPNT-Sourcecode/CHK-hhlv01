@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Dict
 
-from solutions.CHK import models
+from lib.solutions.CHK import models
 
 
 class CheckoutService:
@@ -35,9 +35,18 @@ class CheckoutService:
 
         return sku_counts
 
-    def apply_offer(self, offer: models.Offer, skus: Dict[str, int], cost: int = 0):
+    def apply_offer(
+            self,
+            offer: models.Offer,
+            skus: Dict[str, int],
+            carry_over: Dict[str, int] = {},
+            cost: int = 0,
+    ):
         if offer.condition.applies(skus) and offer.result.applies(skus):
             skus[offer.condition.sku] -= offer.condition.quantity
+
+            if offer.result.sku != offer.condition.sku:
+                carry_over[offer.condition.sku] = offer.condition.quantity
 
             # if the result price is 0, subtract from quantity
             if offer.result.price == 0:
@@ -50,9 +59,9 @@ class CheckoutService:
                 del skus[offer.result.sku]
 
             # call apply again until offer cond unsatisfied
-            cost, skus = self.apply_offer(offer, skus, cost)
+            cost, skus, carry_over = self.apply_offer(offer, skus, carry_over, cost)
 
-        return cost, skus
+        return cost, skus, carry_over
 
     def calculate_cost(self, skus: Dict[str, int]) -> int:
         """
@@ -62,7 +71,9 @@ class CheckoutService:
         total_cost = 0
         for offer in self.offers:
             # if offer.condition.applies(skus) and offer.result.applies(skus):
-            cost, skus = self.apply_offer(offer, skus)
+            cost, skus, carry_over = self.apply_offer(offer, skus)
+            skus = skus + Counter(carry_over)
+
             # if offer.result.sku != offer.condition.sku:
             #    skus[offer.condition.sku] += offer.condition.quantity
             total_cost += cost
@@ -75,6 +86,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
