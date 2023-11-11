@@ -70,7 +70,3 @@ class CheckoutService:
                         total_cost += 1
 
         return total_cost
-
-
-
-

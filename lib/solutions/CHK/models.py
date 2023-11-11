@@ -28,5 +28,3 @@ class SKUItem:
 
     def on_offer(self, offer_cond: OfferCondition):
         return offer_cond.sku == self.sku and offer_cond.quantity <= self.quantity
-
-
