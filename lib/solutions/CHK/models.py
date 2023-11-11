@@ -35,10 +35,12 @@ class MultiCondition(AbstractCond):
         """
         Return True if the Condition applies to the SKUItem's provided
         """
+        count = 0
+        for sku in self.skus:
+            if skus.get(sku, 0) > 0:
+                count += 1
 
-        if skus
-
-        return self.quantity <= skus.get(self.sku, 0)
+        return self.quantity <= count
 
 
 @dataclasses.dataclass
@@ -58,6 +60,7 @@ class Result:
 class Offer:
     condition: Condition
     result: Result
+
 
 
 
