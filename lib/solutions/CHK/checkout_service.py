@@ -64,7 +64,15 @@ class CheckoutService:
             skus, cost = self.apply_offer(offer, skus, total_cost)
             total_cost += cost
 
+            if not skus:  # if there are no items to apply offers to
+                break
+
+        # add any remaining full price items
+        for sku, quantity in skus.items():
+            total_cost += self.prices.get(sku) * quantity
+
         return total_cost
+
 
 
 
