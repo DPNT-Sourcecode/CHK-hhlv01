@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Dict
 
-from lib.solutions.CHK import models
+from solutions.CHK import models
 
 
 class CheckoutService:
@@ -14,7 +14,7 @@ class CheckoutService:
             models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
             models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
             models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
-            models.Offer(models.Condition("F", 2), models.Result("F", 1, 0)),
+            models.Offer(models.Condition("F", 3), models.Result("F", 3, 20)),
         ]
 
     def _validate_sku(self, sku: str) -> bool:
@@ -92,4 +92,5 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
