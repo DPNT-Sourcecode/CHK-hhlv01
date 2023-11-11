@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Dict
 
-from solutions.CHK import models
+from lib.solutions.CHK import models
 
 
 class CheckoutService:
@@ -73,6 +73,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
