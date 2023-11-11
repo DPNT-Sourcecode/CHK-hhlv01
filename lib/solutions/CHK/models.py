@@ -28,10 +28,13 @@ class Condition:
 @dataclasses.dataclass
 class Result:
     sku: str
-    # quantity: int
+    quantity: int
     price: int
 
     def apply(self, skus: Dict[str, Iterable[SKUItem]]):
+        """
+        Return the SKUs after updating prices
+        """
         res_skus = skus.get(self.sku, [])
 
         for sku in res_skus:
@@ -62,4 +65,5 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
+
 
