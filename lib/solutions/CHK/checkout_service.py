@@ -9,14 +9,12 @@ class CheckoutService:
         self.prices = {"A": 50, "B": 30, "C": 20, "D": 15}
         self.items = self.prices.keys()
 
-        self.offers = {
-            "E": [models.Offer(models.Condition("E", 2), models.Result("B", 1, 0))],
-            "A": [
+        self.offers = [
+            models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
                 models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
                 models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
-            ],
-            "B": [models.Offer(models.Condition("B", 2), models.Result("B", 2, 45))],
-        }
+                models.Offer(models.Condition("B", 2), models.Result("B", 2, 45))
+        ]
 
     def _validate_sku(self, sku: str) -> bool:
         """
@@ -32,12 +30,12 @@ class CheckoutService:
         Return a list of SKUItems and Offers or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
-
         sku_items = []
+
         # create SKUItem for each valid SKU, adding offer if found
-        for sku, quantity in sku_counts.items():
+        for sku in sku_counts.keys():
             if self._validate_sku(sku):
-                sku_item = models.SKUItem(sku, quantity, self.prices.get(sku))
+                sku_item = models.SKUItem(sku, self.prices.get(sku))
                 sku_items.append(sku_item)
             else:
                 return -1
@@ -50,6 +48,11 @@ class CheckoutService:
         """
         total_cost = 0
 
+
+        for offer in self.offers:
+
+
+
         for sku in skus:
             if offers := self.offers.get(sku.sku):
                 for offer in offers:
@@ -57,4 +60,5 @@ class CheckoutService:
                         total_cost += 1
 
         return total_cost
+
 
