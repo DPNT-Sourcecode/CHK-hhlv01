@@ -52,6 +52,9 @@ class CheckoutService:
             # call apply again until offer cond unsatisfied
             cost, skus = self.apply_offer(offer, skus, cost)
 
+            if offer.condition.sku != offer.result.sku:
+                skus[offer.condition.sku] += offer.condition.quantity
+
         return cost, skus
 
     def calculate_cost(self, skus: Dict[str, int]) -> int:
@@ -72,5 +75,6 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
