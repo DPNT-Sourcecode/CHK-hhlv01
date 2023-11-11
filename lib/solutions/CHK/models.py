@@ -27,18 +27,23 @@ class Offer:
     condition: Condition
     result: Result
 
-    def apply(self, skus: Dict[str, Iterable[models.SKUItem]]):
+    def apply(self, skus: Dict[str, Iterable[SKUItem]]):
         # if condition is valid and item not offer_applied
-        if len(skus.get(self.condition.sku)) >= self.condition.quantity:
+
+        valid_skus = skus.get(self.condition.sku)
+        if all(not sku.offer_applied for sku in valid_skus) >= self.condition.quantity:
 
 
 
+            # apply result
+            self.result.
 
-        # apply result
 
-        # call apply again until offer cond unsatisified
+            # call apply again until offer cond unsatisified
+            skus = self.apply(skus)
 
         return skus
+
 
 
 
