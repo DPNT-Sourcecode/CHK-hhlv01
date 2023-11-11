@@ -36,6 +36,7 @@ class CheckoutService:
         return sku_counts
 
     def apply_offer(self, offer: models.Offer, skus: Dict[str, int], cost: int = 0):
+
         if offer.condition.applies(skus) and offer.result.applies(skus):
             if offer.condition.sku == offer.result.sku:
                 skus[offer.condition.sku] -= offer.condition.quantity
@@ -73,3 +74,4 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
