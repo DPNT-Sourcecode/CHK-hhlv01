@@ -65,6 +65,3 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
-
-
-
