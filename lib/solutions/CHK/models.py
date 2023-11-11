@@ -27,8 +27,18 @@ class Offer:
     condition: Condition
     result: Result
 
-    def apply(self, skus: Iterable[SKUItem]):
+    def apply(self, skus: Dict[int, SKUItem]):
+        # if condition is valid and item not offer_applied
+        if self.condition.sku ==
+
+
+
+        # apply result
+
+        # call apply again until offer cond unsatisified
+
         return skus
+
 
 
 
