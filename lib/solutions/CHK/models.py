@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Dict
 
 
 @dataclasses.dataclass
@@ -27,9 +27,10 @@ class Offer:
     condition: Condition
     result: Result
 
-    def apply(self, skus: Dict[int, SKUItem]):
+    def apply(self, skus: Dict[str, Iterable[models.SKUItem]]):
         # if condition is valid and item not offer_applied
-        if self.condition.sku ==
+        if len(skus.get(self.condition.sku)) >= self.condition.quantity:
+
 
 
 
@@ -38,6 +39,7 @@ class Offer:
         # call apply again until offer cond unsatisified
 
         return skus
+
 
 
 

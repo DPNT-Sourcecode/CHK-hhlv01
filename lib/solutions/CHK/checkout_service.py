@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import Iterable
+from typing import Dict, Iterable
 
 from solutions.CHK import models
 
@@ -27,19 +27,21 @@ class CheckoutService:
         Return a list of SKUItems and Offers or -1 if any item is invalid
         """
         sku_counts = Counter(skus)
-        sku_items = []
+        sku_items = {}
 
         # create SKUItem for each valid SKU, adding offer if found
-        for sku in sku_counts.keys():
+        for sku, quantity in sku_counts.items():
             if self._validate_sku(sku):
-                sku_item = models.SKUItem(sku, self.prices.get(sku))
-                sku_items.append(sku_item)
+                sku_items[sku] = [
+                    models.SKUItem(sku, self.prices.get(sku))
+                    for i in range(0, quantity)
+                ]
             else:
                 return -1
 
         return sku_items
 
-    def calculate_cost(self, skus: Iterable[models.SKUItem]) -> int:
+    def calculate_cost(self, skus: Dict[str, Iterable[models.SKUItem]]) -> int:
         """
         Return the total cost of all SKUs.
         """
@@ -49,6 +51,7 @@ class CheckoutService:
 
         total_cost = sum(sku.price for sku in skus)
         return total_cost
+
 
 
 
