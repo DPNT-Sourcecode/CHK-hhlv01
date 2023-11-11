@@ -2,13 +2,13 @@ import dataclasses
 
 
 @dataclasses.dataclass
-class OfferCondition:
+class Condition:
     sku: str
     quantity: int
 
 
 @dataclasses.dataclass
-class OfferResult:
+class Result:
     sku: str
     quantity: int
     price: int
@@ -16,15 +16,13 @@ class OfferResult:
 
 @dataclasses.dataclass
 class Offer:
-    condition: OfferCondition
-    result: OfferResult
+    condition: Condition
+    result: Result
 
 
 @dataclasses.dataclass
 class SKUItem:
     sku: str
-    quantity: int
     price: int
+    offer_applied: Optional[bool] = False
 
-    def on_offer(self, offer_cond: OfferCondition):
-        return offer_cond.sku == self.sku and offer_cond.quantity <= self.quantity

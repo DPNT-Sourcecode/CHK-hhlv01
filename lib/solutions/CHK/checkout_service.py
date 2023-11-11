@@ -10,24 +10,12 @@ class CheckoutService:
         self.items = self.prices.keys()
 
         self.offers = {
-            "E": [
-                models.Offer(
-                    models.OfferCondition("E", 2), models.OfferResult("B", 1, 0)
-                )
-            ],
+            "E": [models.Offer(models.Condition("E", 2), models.Result("B", 1, 0))],
             "A": [
-                models.Offer(
-                    models.OfferCondition("A", 5), models.OfferResult("A", 5, 200)
-                ),
-                models.Offer(
-                    models.OfferCondition("A", 3), models.OfferResult("A", 3, 130)
-                ),
+                models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
+                models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
             ],
-            "B": [
-                models.Offer(
-                    models.OfferCondition("B", 2), models.OfferResult("B", 2, 45)
-                )
-            ],
+            "B": [models.Offer(models.Condition("B", 2), models.Result("B", 2, 45))],
         }
 
     def _validate_sku(self, sku: str) -> bool:
@@ -46,7 +34,6 @@ class CheckoutService:
         sku_counts = Counter(skus)
 
         sku_items = []
-        sku_offers = []
         # create SKUItem for each valid SKU, adding offer if found
         for sku, quantity in sku_counts.items():
             if self._validate_sku(sku):
@@ -70,3 +57,4 @@ class CheckoutService:
                         total_cost += 1
 
         return total_cost
+
