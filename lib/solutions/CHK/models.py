@@ -18,10 +18,12 @@ class Condition:
     sku: str
     quantity: int
 
-    def applies(self, skus: Dict[str, Iterable[SKUItem]]):
-        valid_skus = skus.get(self.sku, [])
-        return len(valid_skus) >= self.quantity and all(
-            not sku.offer_applied for sku in valid_skus
+    def applies(self, skus: Iterable[SKUItem]):
+        """
+        Return True if the Condition applies to the SKUItem's provided
+        """
+        return len(skus) >= self.quantity and all(
+            not sku.offer_applied for sku in skus
         )
 
 
@@ -30,6 +32,9 @@ class Result:
     sku: str
     quantity: int
     price: int
+
+    def apply(self, skus: Iterable[SKUItem]):
+        return skus
 
 
 @dataclasses.dataclass
@@ -40,29 +45,16 @@ class Offer:
     def apply(self, skus: Dict[str, Iterable[SKUItem]]):
         # if condition is valid and item not offer_applied
 
-
-        if len(valid_skus) >= self.condition.quantity and all(
-            not sku.offer_applied for sku in valid_skus
-        ):
+        valid_skus = skus.get(self.condition.sku, [])
+        if self.condition.applies(valid_skus):
             skus[self.condition.sku] = [sku.set_offer_applied() for sku in valid_skus]
 
             # apply result
             res_skus = skus.get(self.result.sku, [])
 
-            result.
-
-            skus[self.result.sku] = res_skus
+            skus = self.result.apply(skus)
 
             # call apply again until offer cond unsatisified
             skus = self.apply(skus)
 
         return skus
-
-
-
-
-
-
-
-
-

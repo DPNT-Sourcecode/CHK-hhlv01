@@ -51,7 +51,3 @@ class CheckoutService:
 
         total_cost = sum(sku.price for sku in skus)
         return total_cost
-
-
-
-
