@@ -11,7 +11,7 @@ def checkout_service():
 
 class TestCheckoutService:
     @pytest.mark.parametrize(
-        "data,expected", [("A", 50), ("ABCD", 115), ("CCCC", 80), ("", 0)]
+        "data,expected", [("A", 50), ("ABCD", 115), ("EE", 80), ("CCCC", 80), ("", 0)]
     )
     def test_checkout_cost_individual(self, data, expected, checkout_service):
         sku_items = checkout_service.create_skus(data)
@@ -49,4 +49,5 @@ class TestCheckout:
     @pytest.mark.parametrize("data,expected", [("", 0)])
     def test_checkout(self, data, expected):
         assert checkout(data) == expected
+
 
