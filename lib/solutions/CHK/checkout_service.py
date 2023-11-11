@@ -10,8 +10,8 @@ class CheckoutService:
         self.items = self.prices.keys()
 
         self.offers = [
-            models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
             models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
+            models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
             models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
             models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
         ]
@@ -73,6 +73,7 @@ class CheckoutService:
             total_cost += self.prices.get(sku) * quantity
 
         return total_cost
+
 
 
 
