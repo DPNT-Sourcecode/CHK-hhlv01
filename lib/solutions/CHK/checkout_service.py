@@ -11,7 +11,7 @@ class CheckoutService:
 
         self.offers = [
             models.Offer(models.Condition("E", 2), models.Result("B", 1, 0)),
-            models.Offer(models.Condition("A", 5), models.Result("A", 5, 40)),
+            models.Offer(models.Condition("A", 5), models.Result("A", 5, 200)),
             models.Offer(models.Condition("A", 3), models.Result("A", 3, 130)),
             models.Offer(models.Condition("B", 2), models.Result("B", 2, 45)),
         ]
@@ -53,4 +53,5 @@ class CheckoutService:
         [sku_values.extend(s) for s in skus.values()]
         total_cost = sum(sku.price for sku in sku_values)
         return total_cost
+
 

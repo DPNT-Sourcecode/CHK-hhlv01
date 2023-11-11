@@ -43,7 +43,7 @@ class Result:
                 break
 
             sku.set_offer_applied()
-            sku.price = self.price
+            sku.price = self.price / self.quantity
             count += 1
 
         skus[self.sku] = res_skus
@@ -70,4 +70,5 @@ class Offer:
             skus = self.apply(skus)
 
         return skus
+
 
